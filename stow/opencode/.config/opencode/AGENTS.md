@@ -26,10 +26,17 @@ Personal rules that apply across all opencode sessions on this machine.
   as environment variables at runtime by the process that needs them.
 - Never print, log, or echo a secret value once it is in scope.
 
-## Destructive actions
+## Git
 
+- Never commit without checking in first. Commits must be explicit
+  human decisions.
+- Write commit messages for human review — no auto-commits, no
+  auto-generated messages.
 - Ask before force-pushing, rewriting git history, or deleting anything
   outside the current project's working tree.
+
+## Destructive actions
+
 - Ask before touching system config (Guix, systemd, Shepherd). These live
   in separate repos.
 
