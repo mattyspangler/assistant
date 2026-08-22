@@ -1,0 +1,22 @@
+# Working plan/notes file — not meant to be tracked
+PLAN.md
+
+# OS/editor cruft
+.DS_Store
+*.swp
+*.swo
+.idea/
+
+# OpenCode local state that shouldn't be versioned
+.opencode/plugins/*.local.*
+tui.json.local
+
+# Never allow secrets to accidentally land here.
+# Secrets live in a separate encrypted repo (see PLAN.md §2) — this repo
+# should never contain plaintext credentials, but the patterns below are
+# a backstop against accidents, not the actual security boundary.
+*.env
+.env.*
+*.pem
+*.key
+secrets/

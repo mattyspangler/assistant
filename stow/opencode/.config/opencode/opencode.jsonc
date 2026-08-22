@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // Superpowers: software-development methodology bundled as an OpenCode
+  // plugin (not a skill — see PLAN.md §3 for why). Pinned to a tag, not
+  // `main`, so every machine that clones this repo gets identical behavior.
+  // Bump deliberately: edit the tag below, commit, done.
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git#v6.3.0"]
+
+  // Everything else (agent defs, mcp servers, permission policy, commands)
+  // gets added here incrementally as those pieces are built out. See
+  // PLAN.md for the full plan and current status.
+}
