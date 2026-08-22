@@ -1,11 +1,5 @@
-// This file is NOT the standard `opencode.jsonc` — it is loaded as a layer
-// via OPENCODE_CONFIG (see README). OpenCode's built-in config merge
-// combines it with the per-machine `~/.config/opencode/opencode.jsonc`,
-// so local config (providers, model prefs, per-machine overrides) is never
-// overwritten when this repo is cloned onto a different machine. Name this
-// file deliberately — it is the *base* layer, merged upstream of per-project
-// config, but downstream of the remote/global layers in OpenCode's
-// precedence order.
+// Base config layer — loaded via OPENCODE_CONFIG, merged with per-machine
+// `opencode.jsonc` so local config is never overwritten.
 {
   "$schema": "https://opencode.ai/config.json",
 

@@ -2,31 +2,38 @@
 
 Personal rules that apply across all opencode sessions on this machine.
 
+## Code quality
+
+- Explain *why*, not *what*. Comments cover only non-obvious engineering
+  decisions, architectural constraints, or business reasons.
+- Delete comments that restate native features, variable names, or
+  function names.
+- Keep comments to single-line fragments or punchy one-sentence
+  statements. Strip conversational filler.
+- Use imperative mood for technical notes. "Cache…", "Throttle…",
+  "Bypass…", "Normalize…".
+- Flag temporary code: `TODO:` (planned), `FIXME:` (broken),
+  `NOTE:` (non-obvious dependency).
+- Do not add comments to generated code unless asked.
+
 ## Secrets
 
 - Never read, edit, or execute commands against anything under
-  `~/Coding/secrets/` or `~/.config/sops/`. This is enforced by permission
-  config (see `opencode.jsonc`), not just this instruction — but don't try
-  to route around it (e.g. via a subshell, a different tool, or a relative
-  path that resolves there).
-- If a task seems to require a secret, stop and ask rather than trying to
-  read it directly. Secrets get injected as environment variables at
-  runtime by whatever process needs them (pipeline, shell session) — you
-  should never need to open the encrypted files or the key yourself.
-- Never print, log, or echo a secret value once it's in scope, even if
-  you're allowed to use it.
+  `~/Coding/secrets/` or `~/.config/sops/`. Permission config already
+  blocks this — do not try to route around it via subshell, a different
+  tool, or relative-path resolution.
+- When a task appears to need a secret, stop and ask. Secrets are injected
+  as environment variables at runtime by the process that needs them.
+- Never print, log, or echo a secret value once it is in scope.
 
 ## Destructive actions
 
 - Ask before force-pushing, rewriting git history, or deleting anything
   outside the current project's working tree.
-- Ask before running commands that touch system config (Guix, systemd,
-  Shepherd services) — these are typically managed in a separate repo,
-  not this one.
+- Ask before touching system config (Guix, systemd, Shepherd). These live
+  in separate repos.
 
 ## General
 
-- Prefer asking a clarifying question over guessing when a request is
-  ambiguous.
-- Keep explanations concise. Don't restate what was just asked back as
-  preamble before doing it.
+- Ask a clarifying question when a request is ambiguous. Do not guess.
+- Keep responses concise. Do not restate the request as preamble.
