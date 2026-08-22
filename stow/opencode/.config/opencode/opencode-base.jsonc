@@ -1,0 +1,67 @@
+// This file is NOT the standard `opencode.jsonc` — it is loaded as a layer
+// via OPENCODE_CONFIG (see README). OpenCode's built-in config merge
+// combines it with the per-machine `~/.config/opencode/opencode.jsonc`,
+// so local config (providers, model prefs, per-machine overrides) is never
+// overwritten when this repo is cloned onto a different machine. Name this
+// file deliberately — it is the *base* layer, merged upstream of per-project
+// config, but downstream of the remote/global layers in OpenCode's
+// precedence order.
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // Superpowers: software-development methodology bundled as an OpenCode
+  // plugin (not a skill — see PLAN.md §3 for why). Pinned to a tag, not
+  // `main`, so every machine that clones this repo gets identical behavior.
+  // Bump deliberately: edit the tag below, commit, done.
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git#v6.3.0"],
+
+  // Hard-block the agent from ever touching the secrets repo or the age
+  // private key, regardless of which tool it tries to use. See PLAN.md §2
+  // for the full reasoning. Convention: the secrets repo always lives at
+  // ~/Coding/secrets on every machine; the age key always lives at sops'
+  // own default path. `~` expands per-user at runtime, so this is portable
+  // across machines without hardcoding a username.
+  //
+  // Layered defense, in order of what actually stops each tool:
+  //  1. external_directory: "deny" — this is the primary gate. It applies
+  //     to ANY tool that touches a path outside the current project working
+  //     directory (read, edit, glob, grep, many bash commands) per the
+  //     opencode docs. As long as opencode is never started with a working
+  //     directory that is an ancestor of ~/Coding/secrets (e.g. never run
+  //     opencode from ~/Coding itself — always from a specific project
+  //     dir), this alone blocks essentially everything.
+  //  2. read / edit: "deny" — explicit backstop in case a future opencode
+  //     version changes how external_directory is scoped, or in case
+  //     opencode is ever started with a broader working directory.
+  //  3. bash: "deny" on path-shaped patterns — bash permission matches the
+  //     parsed command text, not a path per se, so this is a weaker,
+  //     best-effort layer (catches `cat ~/.config/sops/...`,
+  //     `sops -d ~/Coding/secrets/...`, etc. by literal substring) rather
+  //     than a structural guarantee. Layer 1 is what actually matters.
+  "permission": {
+    "external_directory": {
+      "~/Coding/secrets/**": "deny",
+      "~/.config/sops/**": "deny"
+    },
+    "read": {
+      "*": "allow",
+      "~/Coding/secrets/**": "deny",
+      "~/.config/sops/**": "deny"
+    },
+    "edit": {
+      "*": "allow",
+      "~/Coding/secrets/**": "deny",
+      "~/.config/sops/**": "deny"
+    },
+    "bash": {
+      "*": "allow",
+      "*Coding/secrets*": "deny",
+      "*sops*": "deny",
+      "*age/keys.txt*": "deny"
+    }
+  }
+
+  // Everything else (agent defs, mcp servers, more commands) gets added
+  // here incrementally as those pieces are built out. See PLAN.md for the
+  // full plan and current status.
+}
