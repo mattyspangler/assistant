@@ -1,6 +1,10 @@
 # Working plan/notes file — not meant to be tracked
 PLAN.md
 
+# Stow runtime cache — never committed (per-machine, auto-generated)
+.stow-build/
+.stow-local-ignore
+
 # OS/editor cruft
 .DS_Store
 *.swp
