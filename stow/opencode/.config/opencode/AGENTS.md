@@ -39,6 +39,12 @@ Personal rules that apply across all opencode sessions on this machine.
 
 - Ask before touching system config (Guix, systemd, Shepherd). These live in separate repos.
 
+## Working directory boundaries
+
+- Never remove or edit files outside the current working directory without a two-way discussion first. This is not an edit-approval checkbox — stop and have the conversation. State what you want to change, where, and why, then wait for a response.
+- The working directory is the session's active project root. Files elsewhere on the machine are not fair game for silent modification or deletion.
+- This applies regardless of tool — direct edit, shell redirection, a script, a pipeline, or any indirect path that results in an outside-dir mutation.
+
 ## General
 
 - Ask a clarifying question when a request is ambiguous. Do not guess.
